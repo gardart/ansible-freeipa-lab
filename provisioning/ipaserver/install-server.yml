@@ -1,0 +1,11 @@
+---
+- name: Playbook to configure IPA servers
+  hosts: ipaserver
+  become: true
+  collections:
+    - freeipa.ansible_freeipa
+
+
+  roles:
+  - role: ipaserver
+    state: present

@@ -1,0 +1,16 @@
+VM_NAME= "windows-dc-#{SecureRandom.hex(2)}"
+Vagrant.configure("2") do |config|
+  config.vm.define "dc1" do |config|
+    config.vm.box = "StefanScherer/windows_2019"
+    config.vm.hostname = "dc1"
+    config.vm.synced_folder '.', '/vagrant', disabled: true
+    config.vm.network :private_network, ip: "192.168.9.15", gateway: "192.168.9.254"
+
+    config.vm.provision "ansible" do |ansible|
+        ansible.playbook = "./domain.yml"
+        ansible.inventory_path = "./inventory"
+        ansible.become = true
+    end
+  end
+end
+

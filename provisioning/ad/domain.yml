@@ -1,0 +1,95 @@
+---
+- hosts: dc
+  gather_facts: true
+
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    - name: set local admin password
+      ansible.windows.win_user:
+        name: Administrator
+        password: "{{ windows_domain_controller_info['domain_admin_password'] }}"
+        state: present
+  
+    - name: Firewall rule to allow ICMP v4 echo (ping)
+      community.windows.win_firewall_rule:
+        name: ICMP Allow incoming V4 echo request
+        enabled: yes
+        state: present
+        profiles: private
+        action: allow
+        direction: in
+        protocol: icmpv4
+        icmp_type_code:
+        - '8:*'
+
+    - name: Firewall rule to allow RDP on TCP port 3389
+      community.windows.win_firewall_rule:
+        name: Remote Desktop
+        localport: 3389
+        action: allow
+        direction: in
+        protocol: tcp
+        profiles: private
+        state: present
+        enabled: yes
+
+    - name: features | Installing RSAT AD Admin Center
+      ansible.windows.win_feature:
+        name: RSAT-AD-AdminCenter
+        state: present
+
+    - name: features | Installing AD Domain Services
+      ansible.windows.win_feature:
+        name: AD-Domain-Services
+        include_management_tools: true
+        include_sub_features: true
+        state: present
+
+    - name: Creating a windows domain
+      ansible.windows.win_domain:
+        dns_domain_name: "{{ windows_domain_controller_info['dns_domain_name'] }}"
+        safe_mode_password: "{{ windows_domain_controller_info['safe_mode_password'] }}"
+      register: create_win_domain
+
+    - name: Reboot
+      ansible.windows.win_reboot:
+      when: create_win_domain.reboot_required
+
+    - name: Setting DNS Servers
+      ansible.windows.win_dns_client:
+        adapter_names: "*"
+        ipv4_addresses: "192.168.9.15"
+    
+    - name: Managing Domain Controller Membership
+      ansible.windows.win_domain_controller:
+        dns_domain_name: "{{ windows_domain_controller_info['dns_domain_name'] }}"
+        domain_admin_user: "{{ windows_domain_controller_info['domain_admin_user'] }}"
+        domain_admin_password: "{{ windows_domain_controller_info['domain_admin_password'] }}"
+        safe_mode_password: "{{ windows_domain_controller_info['safe_mode_password'] }}"
+        state: "{{ windows_domain_controller_info['state'] }}"
+      register: _windows_domain_controller
+
+    - name: Reboot
+      ansible.windows.win_reboot:
+      when: _windows_domain_controller.reboot_required
+
+    - name: Ensure user bob is present with address information
+      community.windows.win_domain_user:
+        name: bob
+        firstname: Bob
+        surname: Smith
+        company: BobCo
+        password: B0bP4ssw0rd
+        state: present
+        groups_action: add
+        groups:
+          - Domain Admins
+        street: 123 4th St.
+        city: Sometown
+        state_province: IN
+        postal_code: 12345
+        country: US
+        attributes:
+          telephoneNumber: 555-123456
