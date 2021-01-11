@@ -13,6 +13,6 @@
       line: '192.168.9.16  ipaserver-1.idmb.local  ipaserver-1'
       backup: true
 
-  roles:
+	roles:
   - role: ipaserver
     state: present
