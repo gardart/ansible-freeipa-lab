@@ -1,5 +1,7 @@
 ### Ansible ###
 *.retry
+secrets.yml
+vault.yml
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

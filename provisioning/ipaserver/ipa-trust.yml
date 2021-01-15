@@ -1,0 +1,15 @@
+---
+- name: Playbook to ensure a one-way trust is present
+  hosts: ipaserver
+  become: true
+  gather_facts: true
+  collections:
+    - freeipa.ansible_freeipa
+  
+  tasks:
+  - name: ensure the one-way trust present
+    ipatrust:
+      realm: test.local
+      admin: Administrator
+      password: a31557c9-4d4f
+      state: present

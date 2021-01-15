@@ -1,2 +1,4 @@
 ---
-# IPA server
+ipaddress: '{{ vault_ipaddress}}'
+hostname: '{{ vault_hostname }}'
+domain: '{{ vault_domain }}'

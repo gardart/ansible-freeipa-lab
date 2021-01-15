@@ -2,17 +2,22 @@
 - name: Playbook to configure IPA servers
   hosts: ipaserver
   become: true
+  gather_facts: true
   collections:
     - freeipa.ansible_freeipa
-
+  vars_files:
+    - vars/vault.yml
+    - vars/main.yml
   pre_tasks:
+  - name: Print variables for debugging
+    debug:
+      msg: "{{ domain }} {{ hostname }} {{ ansible_default_ipv4.address }} {{inventory_hostname}} {{ ansible_all_ipv4_addresses[1] }} "
   - name: change /etc/hosts
     lineinfile:
       path: '/etc/hosts'
-      regexp: '.*ipaserver.*'
-      line: '192.168.9.16  ipaserver-1.idmb.local  ipaserver-1'
+      regexp: '.*{{ hostname }}.*'
+      line: '{{ ipaddress }}  {{ hostname }}.{{ domain}} {{hostname}}'
       backup: true
-
   roles:
   - role: ipaserver
     state: present
