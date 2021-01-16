@@ -6,7 +6,7 @@
   collections:
     - freeipa.ansible_freeipa
   vars_files:
-    - vars/vault.yml
+    - ../../default.config.yml
     - vars/main.yml
   pre_tasks:
   - name: Print variables for debugging

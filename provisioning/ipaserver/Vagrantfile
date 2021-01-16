@@ -1,13 +1,16 @@
+require 'yaml'
+settings = YAML.load_file '../../default.config.yml'
+fqdn = settings['ipa_server_name'] + "." + settings['ipa_domain']
 Vagrant.configure("2") do |config|
-  config.vm.define "ipaserver-1.idmb.local" do |config|
+  config.vm.define "ipa1" do |config|
     config.vm.box = "geerlingguy/centos8"
-		config.vm.hostname = "ipaserver-1.idmb.local"
+    config.vm.hostname = fqdn
     config.vm.synced_folder '.', '/vagrant', disabled: true
 		config.ssh.insert_key = false
-    config.vm.network :private_network, ip: "192.168.9.16", gateway: "192.168.9.254"
+    config.vm.network :private_network, ip: settings['ipa_server_ip_address'], gateway: settings['ipa_server_gateway']
 
     config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "./ipaserver.yml"
+        ansible.playbook = "./playbook.yml"
         ansible.inventory_path = "./inventory"
         ansible.become = true
     end

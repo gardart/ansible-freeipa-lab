@@ -1,15 +1,16 @@
-VM_NAME= "windows-dc-#{SecureRandom.hex(2)}"
+require 'yaml'
+settings = YAML.load_file '../../default.config.yml'
+
 Vagrant.configure("2") do |config|
   config.vm.define "dc1" do |config|
     config.vm.box = "StefanScherer/windows_2019"
-    config.vm.hostname = "dc1"
+    config.vm.hostname = settings['ad_server_name']
     config.vm.synced_folder '.', '/vagrant', disabled: true
-    config.vm.network :private_network, ip: "192.168.9.15", gateway: "192.168.9.254"
+    config.vm.network :private_network, ip: settings['ad_server_ip_address'], gateway: settings['ad_server_gateway']
 
     config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "./domain.yml"
+        ansible.playbook = "./playbook.yml"
         ansible.inventory_path = "./inventory"
-        ansible.become = true
     end
   end
 end

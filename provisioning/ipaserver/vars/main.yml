@@ -1,4 +1,5 @@
 ---
-ipaddress: '{{ vault_ipaddress}}'
-hostname: '{{ vault_hostname }}'
-domain: '{{ vault_domain }}'
+ipaddress: '{{ ipa_server_ip_address }}'
+hostname: '{{ ipa_server_name }}'
+fqdn: '{{ ipa_server_fqdn }}'
+domain: '{{ ipa_domain }}'

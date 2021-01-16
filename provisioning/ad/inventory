@@ -1,5 +1,5 @@
 [dc]
-dc1 ansible_host=192.168.9.15
+dc1 ansible_host=192.168.68.10
 
 [dc:vars]
 ansible_user="vagrant"

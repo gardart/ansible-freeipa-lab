@@ -1,8 +1,8 @@
 ---
 # Domain Controller
 windows_domain_controller_info:
-  dns_domain_name: test.local
-  domain_admin_password: a31557c9-4d4f 
-  domain_admin_user: administrator@test.local
-  safe_mode_password: a31557c9-4d4f
+  dns_domain_name: '{{ ad_domain }}'
+  domain_admin_user: '{{ ad_admin_user }}'
+  domain_admin_password: '{{ ad_admin_password }}'
+  safe_mode_password: '{{ ad_safe_mode_password }}'
   state: domain_controller

@@ -1,13 +1,6 @@
 [ipaserver]
-ipaserver-1.idmb.local ansible_host=192.168.9.16
+ipa1 ansible_host=192.168.68.11
 
 [ipaserver:vars]
 ansible_user=vagrant
-ansible_ssh_private_key_file=/home/gardar/.vagrant.d/insecure_private_key
-ipaadmin_password=IPApass1.
-ipadm_password=IPApass1.
-ipaserver_domain=idmb.local
-ipaserver_realm=IDMB.LOCAL
-ipaserver_setup_dns=yes
-ipaserver_auto_forwarders=yes
-ipaserver_setup_adtrust=yes
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key

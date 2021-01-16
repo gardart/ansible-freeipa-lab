@@ -1,8 +1,9 @@
 ---
-- hosts: dc
+- hosts: dc1
   gather_facts: true
 
   vars_files:
+    - ../../default.config.yml
     - vars/main.yml
 
   tasks:
@@ -60,7 +61,7 @@
     - name: Setting DNS Servers
       ansible.windows.win_dns_client:
         adapter_names: "*"
-        ipv4_addresses: "192.168.9.15"
+        ipv4_addresses: "{{ ad_server_ip_address }}"
     
     - name: Managing Domain Controller Membership
       ansible.windows.win_domain_controller:
@@ -75,21 +76,15 @@
       ansible.windows.win_reboot:
       when: _windows_domain_controller.reboot_required
 
-    - name: Ensure user bob is present with address information
+    - name: Ensure user Jon is present with address information
       community.windows.win_domain_user:
-        name: bob
-        firstname: Bob
-        surname: Smith
-        company: BobCo
-        password: B0bP4ssw0rd
+        name: jon
+        firstname: Jon
+        surname: Jonsson
+        password: J0nP4ssw0rd
         state: present
         groups_action: add
         groups:
           - Domain Admins
-        street: 123 4th St.
-        city: Sometown
-        state_province: IN
-        postal_code: 12345
-        country: US
         attributes:
-          telephoneNumber: 555-123456
+          telephoneNumber: 354 123 45 67
