@@ -62,3 +62,5 @@ vagrant up
 cd provisioning/ipaserver
 vagrant up
 ```
+
+Browse to https://ipa.idm.ad.test/ipa/ui and login with user admin and password IDMpass1.
