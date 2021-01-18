@@ -76,7 +76,7 @@ ipa-adtrust-install –netbios-name=IDM.AD.TEST
 
 Configure DNS forwarder on freeipa server. 
 ```shell
-ipa dnsforwardzone-add ad.test –forwarder=192.168.68.10 –forward-policy=only
+ipa dnsforwardzone-add ad.test --forwarder=192.168.68.10 --forward-policy=only
 ```
 
 Test records
@@ -88,10 +88,30 @@ dig SRV _kerberos._tcp.ad.test
 The SRV query is forwarded to AD and it’s returned the reference of kerberos (port 88) and ldap services (port 389). 
 In this way the sssd client is able to know how to contact the active directory services
 
-The same thing in active directory:
+On the Windows Active Directory server, we need the same thing:
 
 ```shell
-C:\>dnscmd 127.0.0.1 /RecordAdd ad.test idm.ad.test. NS ipa.idm.ad.test
-C:\>dnscmd 127.0.0.1 /RecordAdd ad.test ipa.idm.ad.test A 192.168.68.11
-C:\>dnscmd 127.0.0.1 /ZoneAdd idm.ad.test. /Forwarder 192.168.68.11
+dnscmd 127.0.0.1 /RecordAdd ad.test idm.ad.test. NS ipa.idm.ad.test
+dnscmd 127.0.0.1 /RecordAdd ad.test ipa.idm.ad.test A 192.168.68.11
+dnscmd 127.0.0.1 /ZoneAdd idm.ad.test. /Forwarder 192.168.68.11
 ```
+
+Test
+```shell
+nslookup -type=SRV _kerberos._tcp.idm.ad.test
+```
+
+```
+/etc/named/ipa-options-ext.conf
+	dnssec-enable no;
+    dnssec-validation no;
+
+systemctl restart named-pkcs11
+```
+
+systemctl restart ipa
+kinit admin
+ipa-getkeytab -s ipa.idm.ad.test -p cifs/ipa.idm.ad.test@IDM.AD.TEST -k /etc/samba/samba.keytab
+
+ipa trust-add --type=ad ad.test --admin Administrator --password
+
