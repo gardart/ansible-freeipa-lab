@@ -66,12 +66,14 @@ vagrant up
 Browse to https://ipa.idm.ad.test/ipa/ui and login with user admin and password IDMpass1.
 
 ## Connect FreeIPA with Active Directory (one-way trust)
+https://www.freeipa.org/page/Active_Directory_trust_setup#If_IPA_is_subdomain_of_AD
 
 Configure netbios name for idm.ad.test.
 Support for trusted domain is enabled setting a netbios name for linux domain. 
 This is a prerequisite because active directory expects from remote side a netbios name.
 ```shell
-ipa-adtrust-install –netbios-name=IDM.AD.TEST
+ipa-adtrust-install
+#ipa-adtrust-install –netbios-name=IDM
 ```
 
 Configure DNS forwarder on freeipa server. 
@@ -91,6 +93,10 @@ In this way the sssd client is able to know how to contact the active directory 
 On the Windows Active Directory server, we need the same thing:
 
 ```shell
+dnscmd 127.0.0.1 /RecordAdd ad.test ipa.idm.ad.test. A 192.168.68.11
+dnscmd 127.0.0.1 /RecordAdd ad.test idm.ad.test. NS ipa.idm.ad.test
+
+OLD
 dnscmd 127.0.0.1 /RecordAdd ad.test idm.ad.test. NS ipa.idm.ad.test
 dnscmd 127.0.0.1 /RecordAdd ad.test ipa.idm.ad.test A 192.168.68.11
 dnscmd 127.0.0.1 /ZoneAdd idm.ad.test. /Forwarder 192.168.68.11
@@ -98,6 +104,8 @@ dnscmd 127.0.0.1 /ZoneAdd idm.ad.test. /Forwarder 192.168.68.11
 
 Test
 ```shell
+nslookup -type=SRV _ldap._tcp.ad.test
+nslookup -type=SRV _ldap._tcp.idm.ad.test
 nslookup -type=SRV _kerberos._tcp.idm.ad.test
 ```
 

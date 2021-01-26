@@ -1,6 +1,6 @@
 ---
 - name: Playbook to configure IPA servers
-  hosts: ipaserver
+  hosts: ipareplicas
   become: true
   gather_facts: true
   collections:
@@ -19,5 +19,5 @@
       line: '{{ ipaddress }}  {{ hostname }}.{{ domain}} {{hostname}}'
       backup: true
   roles:
-  - role: ipaserver
+  - role: ipareplica
     state: present

@@ -1,13 +1,13 @@
 require 'yaml'
 settings = YAML.load_file '../../default.config.yml'
-fqdn = settings['ipa_server_name'] + "." + settings['ipa_domain']
+fqdn = settings['ipa_replica_name'] + "." + settings['ipa_domain']
 Vagrant.configure("2") do |config|
-  config.vm.define "ipaserver" do |config|
+  config.vm.define "replica" do |config|
     config.vm.box = "geerlingguy/centos8"
     config.vm.hostname = fqdn
     config.vm.synced_folder '.', '/vagrant', disabled: true
 		config.ssh.insert_key = false
-    config.vm.network :private_network, ip: settings['ipa_server_ip_address'], gateway: settings['ipa_server_gateway']
+    config.vm.network :private_network, ip: settings['ipa_replica_ip_address']
     #config.vm.network "public_network", bridge: "Intel(R) Ethernet Connection I217-V", ip: "192.168.5.91"
 
     config.vm.provision "ansible" do |ansible|

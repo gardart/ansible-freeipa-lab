@@ -1,0 +1,35 @@
+---
+- name: all
+  hosts: ipacluster
+  collections:
+    - freeipa.ansible_freeipa
+  
+- name: Install IPA servers
+  hosts: ipaserver
+  become: true
+  collections:
+    - freeipa.ansible_freeipa
+
+  roles:
+  - role: ipaserver
+    state: present
+
+- name: Install IPA replicas
+  hosts: ipareplicas
+  become: true
+  collections:
+    - freeipa.ansible_freeipa
+
+  roles:
+  - role: ipareplica
+    state: present
+
+- name: Install IPA clients
+  hosts: ipaclients
+  become: true
+  collections:
+    - freeipa.ansible_freeipa
+
+  roles:
+  - role: ipaclient
+    state: present

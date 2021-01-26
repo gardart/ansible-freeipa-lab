@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'yaml'
+VAGRANTFILE_API_VERSION = "2"
+settings = YAML.load_file '../../default.config.yml'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "geerlingguy/centos8"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.ssh.insert_key = false
+
+  config.vm.provider :virtualbox do |v|
+    v.memory = 1024
+    v.cpus = 2
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
+  end
+
+  # IPA master
+  config.vm.define "ipa.idm.ad.test" do |ipa|
+    ipa.vm.hostname = "ipa.idm.ad.test"
+    ipa.vm.network :private_network, ip: "192.168.68.11"
+  end
+
+  # IPA replica
+  config.vm.define "rep.idm.ad.test" do |rep|
+    rep.vm.hostname = "rep.idm.ad.test"
+    rep.vm.network :private_network, ip: "192.168.68.12"
+
+    rep.vm.provider :virtualbox do |v|
+      v.memory = 1024
+      v.cpus = 2
+    end
+
+  end
+
+  # IPA master
+  config.vm.define "cli.idm.ad.test" do |cli|
+    cli.vm.hostname = "cli.idm.ad.test"
+    cli.vm.network :private_network, ip: "192.168.68.13"
+  end
+
+end

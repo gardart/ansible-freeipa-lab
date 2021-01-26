@@ -1,0 +1,30 @@
+[ipaservers]
+ipa.idm.ad.test ansible_host=192.168.68.11
+
+[ipaserver]
+ipa.idm.ad.test ansible_host=192.168.68.11
+
+[ipaserver:vars]
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+
+[ipareplicas]
+rep.idm.ad.test ansible_host=192.168.68.12
+
+[ipaclients]
+cli.idm.ad.test ansible_host=192.168.68.13
+
+[ipacluster:children]
+ipaserver
+ipareplicas
+ipaclients
+
+[ipacluster:vars]
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+ipaadmin_password=ADMPassword1
+ipadm_password=DMPassword1
+ipaserver_domain=idm.ad.test
+ipaserver_realm=IDM.AD.TEST
+ipaserver_setup_dns: yes
+ipaserver_auto_forwarders: yes

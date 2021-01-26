@@ -1,0 +1,9 @@
+[ipaservers]
+ipa.idm.ad.test ansible_host=192.168.68.11
+
+[ipareplicas]
+replica ansible_host=192.168.68.12
+
+[ipareplicas:vars]
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key

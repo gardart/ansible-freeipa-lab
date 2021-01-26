@@ -1,0 +1,4 @@
+---
+ipaddress: '{{ ipa_replica_ip_address }}'
+hostname: '{{ ipa_replica_name }}'
+domain: '{{ ipa_domain }}'
