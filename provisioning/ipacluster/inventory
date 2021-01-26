@@ -28,3 +28,4 @@ ipaserver_domain=idm.ad.test
 ipaserver_realm=IDM.AD.TEST
 ipaserver_setup_dns: yes
 ipaserver_auto_forwarders: yes
+ipaserver_setup_adtrust: yes
