@@ -95,11 +95,6 @@ On the Windows Active Directory server, we need the same thing:
 ```shell
 dnscmd 127.0.0.1 /RecordAdd ad.test ipa.idm.ad.test. A 192.168.68.11
 dnscmd 127.0.0.1 /RecordAdd ad.test idm.ad.test. NS ipa.idm.ad.test
-
-OLD
-dnscmd 127.0.0.1 /RecordAdd ad.test idm.ad.test. NS ipa.idm.ad.test
-dnscmd 127.0.0.1 /RecordAdd ad.test ipa.idm.ad.test A 192.168.68.11
-dnscmd 127.0.0.1 /ZoneAdd idm.ad.test. /Forwarder 192.168.68.11
 ```
 
 Test
@@ -111,15 +106,9 @@ nslookup -type=SRV _kerberos._tcp.idm.ad.test
 
 ```
 /etc/named/ipa-options-ext.conf
-	dnssec-enable no;
     dnssec-validation no;
 
 systemctl restart named-pkcs11
 ```
 
-systemctl restart ipa
-kinit admin
-ipa-getkeytab -s ipa.idm.ad.test -p cifs/ipa.idm.ad.test@IDM.AD.TEST -k /etc/samba/samba.keytab
-
-ipa trust-add --type=ad ad.test --admin Administrator --password
 
