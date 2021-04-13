@@ -32,7 +32,7 @@ To use the vagrant files, you will need to have done the following:
   2. Download and Install [Vagrant](https://www.vagrantup.com/downloads.html)
   3. Install [Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
   4. Run the following command to install the necessary Ansible roles for this profile: 
-    `$ ansible-galaxy install -r requirements.yml`
+    `$ ansible-galaxy collection install -r requirements.yml`
   5. Install WinRM module for Ansible deployment on Windows and Vagrant package
     `$ pip install pywinrm python-vagrant`
 
