@@ -116,6 +116,10 @@
       win_command: powershell.exe -ExecutionPolicy Bypass -File C:\Scripts\dns-server-configure.ps1
       register: results
 
+    - name: Execute the dns powershell script
+      win_command: powershell.exe -ExecutionPolicy Bypass -File C:\Scripts\dns-server-configure.ps1
+      register: results
+
     - name: Create A records
       community.windows.win_dns_record:
         name: "{{ ad_server_name }}"
