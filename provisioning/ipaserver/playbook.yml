@@ -21,3 +21,13 @@
   roles:
   - role: ipaserver
     state: present
+  tasks:
+  - name: ensure presence of forwardzone
+    ipadnsforwardzone:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      state: present
+      name: '{{ ad_domain }}'
+      forwarders:
+        - ip_address: '{{ ad_server_ip_address }}'
+      forwardpolicy: first
+      skip_overlap_check: true

@@ -7,6 +7,15 @@
     - vars/main.yml
 
   tasks:
+    - name: Create Scripts folder
+      win_file:
+        state: directory
+        path: C:\Scripts
+
+    - name: Set timezone to 'GMT Standard Time' (GMT)
+      community.windows.win_timezone:
+        timezone: "{{ timezone }}"
+
     - name: set local admin password
       ansible.windows.win_user:
         name: Administrator
@@ -88,3 +97,55 @@
           - Domain Admins
         attributes:
           telephoneNumber: 354 123 45 67
+
+    - name: Add user with POSIX attributes
+      community.windows.win_domain_user:
+        name: testuser1
+        firstname: Test User
+        surname: One
+        password: TestP4ssw0rd
+        state: present
+        attributes:
+          uidNumber: "5001"
+          gidNumber: "5002"
+          unixHomeDirectory: "/home/testuser1"
+          loginShell: "/bin/bash"
+
+    - name: Copy dns-server-configure.ps1 to the scripts folder
+      ansible.windows.win_copy:
+        src: files/Scripts/dns-server-configure.ps1
+        dest: C:\Scripts\dns-server-configure.ps1
+
+    - name: Execute the dns powershell script
+      win_command: powershell.exe -ExecutionPolicy Bypass -File C:\Scripts\dns-server-configure.ps1
+      register: results
+
+    - name: Execute the dns powershell script
+      win_command: powershell.exe -ExecutionPolicy Bypass -File C:\Scripts\dns-server-configure.ps1
+      register: results
+
+    - name: Create A records
+      community.windows.win_dns_record:
+        name: "{{ ad_server_name }}"
+        type: "A"
+        values:
+          - "{{ ad_server_ip_address }}"
+        zone: "{{ ad_domain }}"
+
+    - name: Create A records for IDM subdomain
+      community.windows.win_dns_record:
+        name: "{{ ipa_server_name }}.{{ ipa_domain }}."
+        state: present
+        type: "A"
+        values:
+          - "{{ ipa_server_ip_address }}"
+        zone: "{{ ad_domain }}"
+    
+    - name: Creating NS records for IDM subdomain
+      community.windows.win_dns_record:
+        name: "{{ ipa_domain }}."
+        state: present
+        type: "NS"
+        values:
+          - "{{ ipa_server_name }}.{{ ipa_domain }}"
+        zone: "{{ ad_domain }}"
