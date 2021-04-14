@@ -28,3 +28,5 @@ ipaserver_realm: '{{ ipa_realm }}'
 ipaserver_setup_dns: yes
 ipaserver_auto_forwarders: yes
 ipaserver_setup_adtrust: yes
+
+timezone: GMT Standard Time

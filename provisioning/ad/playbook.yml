@@ -12,6 +12,10 @@
         state: directory
         path: C:\Scripts
 
+    - name: Set timezone to 'GMT Standard Time' (GMT)
+      community.windows.win_timezone:
+        timezone: "{{ timezone }}"
+
     - name: set local admin password
       ansible.windows.win_user:
         name: Administrator
