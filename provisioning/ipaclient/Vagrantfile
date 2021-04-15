@@ -2,7 +2,7 @@ require 'yaml'
 settings = YAML.load_file '../../default.config.yml'
 fqdn = settings['ipa_client_name'] + "." + settings['ipa_domain']
 Vagrant.configure("2") do |config|
-  config.vm.define "client" do |config|
+  config.vm.define "cli" do |config|
     config.vm.box = "geerlingguy/centos8"
     config.vm.hostname = fqdn
     config.vm.synced_folder '.', '/vagrant', disabled: true

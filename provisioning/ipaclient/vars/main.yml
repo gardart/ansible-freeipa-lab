@@ -2,3 +2,4 @@
 ipaddress: '{{ ipa_client_ip_address }}'
 hostname: '{{ ipa_client_name }}'
 domain: '{{ ipa_domain }}'
+ipaclient_krb5_fix: true
