@@ -113,7 +113,7 @@
 
     - name: Copy dns-server-configure.ps1 to the scripts folder
       ansible.windows.win_copy:
-        src: files/Scripts/dns-server-configure.ps1
+        src: files/dns-server-configure.ps1
         dest: C:\Scripts\dns-server-configure.ps1
 
     - name: Execute the dns powershell script
