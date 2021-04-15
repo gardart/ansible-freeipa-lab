@@ -65,6 +65,18 @@ vagrant up
 
 Browse to https://ipa.idm.ad.test/ipa/ui and login with user admin and password IDMpass1.
 
+### Create FreeIPA replica with Vagrant and Ansible provisioner
+```shell
+cd provisioning/ipareplica
+vagrant up
+```
+
+### Create FreeIPA client with Vagrant and Ansible provisioner
+```shell
+cd provisioning/ipaclient
+vagrant up
+```
+
 ## Connect FreeIPA with Active Directory (one-way trust)
 https://www.freeipa.org/page/Active_Directory_trust_setup#If_IPA_is_subdomain_of_AD
 

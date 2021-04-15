@@ -1,0 +1,23 @@
+---
+- name: Playbook to configure IPA clients
+  hosts: ipaclients
+  become: true
+  gather_facts: true
+  collections:
+    - freeipa.ansible_freeipa
+  vars_files:
+    - ../../default.config.yml
+    - vars/main.yml
+  pre_tasks:
+  - name: Print variables for debugging
+    debug:
+      msg: "{{ domain }} {{ hostname }} {{inventory_hostname}}"
+  - name: change /etc/hosts
+    lineinfile:
+      path: '/etc/hosts'
+      regexp: '.*{{ hostname }}.*'
+      line: '{{ ipaddress }}  {{ hostname }}.{{ domain}} {{hostname}}'
+      backup: true
+  roles:
+  - role: ipaclient
+    state: present
