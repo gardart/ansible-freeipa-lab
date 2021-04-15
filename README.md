@@ -116,11 +116,19 @@ nslookup -type=SRV _ldap._tcp.idm.ad.test
 nslookup -type=SRV _kerberos._tcp.idm.ad.test
 ```
 
+## Issues
+Disable DNSSEC validation
 ```
 /etc/named/ipa-options-ext.conf
     dnssec-validation no;
 
 systemctl restart named-pkcs11
 ```
+Login failure with AD account when KDC is not found.
+From /var/log/secure 
+sshd[11566]: pam_sss(sshd:auth): received for user jon@ad.test: 6 (Permission denied)
+Also from /var/log/messages
+krb5_child[6962][6962]: Cannot find KDC for realm "AD.TEST"
 
-
+Issue normally related to DNS lookup, check /etc/resolv.conf and if /etc/krb5.conf has dns_lookup_kdc = true
+https://access.redhat.com/solutions/3242461
