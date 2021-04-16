@@ -1,0 +1,15 @@
+---
+- name: Playbook to configure IPA server HBAC rules
+  hosts: ipaserver
+  become: true
+  gather_facts: true
+  collections:
+    - freeipa.ansible_freeipa
+  vars_files:
+    - ../default.config.yml
+    - vars/main.yml
+  tasks:
+  - ipahbacrule:
+      name: allow_all
+      state: disabled
+      ipaadmin_password: "{{ ipaadmin_password }}"
