@@ -10,6 +10,7 @@ ipa_replica_name: rep
 ipa_replica_ip_address: 192.168.68.12
 ipa_client_name: cli
 ipa_client_ip_address: 192.168.68.13
+ipa_client_krb5_fix: true
 
 ad_realm: AD.TEST
 ad_domain: ad.test
@@ -28,5 +29,7 @@ ipaserver_realm: '{{ ipa_realm }}'
 ipaserver_setup_dns: yes
 ipaserver_auto_forwarders: yes
 ipaserver_setup_adtrust: yes
+ipaserver_ipatrust_range_type: ipa-ad-trust
+#ipaserver_ipatrust_range_type: ipa-ad-trust-posix
 
 timezone: GMT Standard Time

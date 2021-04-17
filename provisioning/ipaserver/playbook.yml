@@ -31,3 +31,25 @@
         - ip_address: '{{ ad_server_ip_address }}'
       forwardpolicy: first
       skip_overlap_check: true
+
+  - name: ensure the one-way trust present
+    ipatrust:
+      realm: "{{ ad_domain }}"
+      admin: "{{ ad_admin_user }}"
+      password: "{{ ad_admin_password }}"
+      range_type: "{{ ipaserver_ipatrust_range_type }}"
+      state: present
+    when: ipaserver_setup_adtrust | bool
+
+  - name: Create an external group and add members from a trust to it
+    ipagroup:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      name: ad_domain_admins_external
+      external: yes
+      externalmember: "{{ ad_netbios }}\\Domain Admins"
+
+  - name: Create internal group and add the external group as a member
+    ipagroup:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      name: ad_domain_admins
+      group: ad_domain_admins_external

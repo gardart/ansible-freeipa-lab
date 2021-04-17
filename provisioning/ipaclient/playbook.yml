@@ -29,7 +29,7 @@
       regexp: '\sdns_lookup_kdc'
       line: '  dns_lookup_kdc = true'
     notify: restart sssd
-    when: ipaclient_krb5_fix | bool
+    when: ipa_client_krb5_fix | bool
 
   - name: KDC - fixing dns_lookup_realm
     lineinfile:
@@ -37,7 +37,7 @@
       regexp: '\sdns_lookup_realm'
       line: '  dns_lookup_realm = true'
     notify: restart sssd
-    when: ipaclient_krb5_fix | bool
+    when: ipa_client_krb5_fix | bool
 
   - name: Ignore Auto DNS on NAT interface
     command: nmcli con mod enp0s3 ipv4.ignore-auto-dns yes
