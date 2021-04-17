@@ -57,6 +57,5 @@
   - name: Disable allow_all HBAC rule
     ipahbacrule:
       name: allow_all
-      state: disabled
+      state: "{{ ipaserver_hbac_allow_all }}"
       ipaadmin_password: "{{ ipaadmin_password }}"
-    when: ipaserver_hbac_allow_all | bool
