@@ -65,6 +65,23 @@ vagrant up
 
 Browse to https://ipa.idm.ad.test/ipa/ui and login with user admin and password IDMpass1.
 
+Viewing the status of IdM services
+```shell
+$ ipactl status
+Directory Service: RUNNING
+krb5kdc Service: RUNNING
+kadmin Service: RUNNING
+named Service: RUNNING
+httpd Service: RUNNING
+ipa-custodia Service: RUNNING
+pki-tomcatd Service: RUNNING
+smb Service: RUNNING
+winbind Service: RUNNING
+ipa-otpd Service: RUNNING
+ipa-dnskeysyncd Service: RUNNING
+ipa: INFO: The ipactl command was successful
+```
+
 ### Create FreeIPA replica with Vagrant and Ansible provisioner
 ```shell
 cd provisioning/ipareplica
@@ -115,6 +132,16 @@ nslookup -type=SRV _ldap._tcp.ad.test
 nslookup -type=SRV _ldap._tcp.idm.ad.test
 nslookup -type=SRV _kerberos._tcp.idm.ad.test
 ```
+
+## Debugging
+
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_identity_management/viewing-starting-and-stopping-the-ipa-server_configuring-and-managing-idm
+
+https://www.freeipa.org/page/Active_Directory_trust_setup#Debugging_trust
+
+https://www.freeipa.org/page/Active_Directory_trust_setup#Allow_access_for_users_from_AD_domain_to_protected_resources
+
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_authentication_and_authorization_in_rhel/understanding-sssd-and-its-benefits_configuring-authentication-and-authorization-in-rhel
 
 ## Issues
 Disable DNSSEC validation

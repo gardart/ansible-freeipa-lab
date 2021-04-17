@@ -28,6 +28,7 @@
       path: /etc/krb5.conf
       regexp: '\sdns_lookup_kdc'
       line: '  dns_lookup_kdc = true'
+    notify: restart sssd
     when: ipaclient_krb5_fix | bool
 
   - name: KDC - fixing dns_lookup_realm
@@ -35,4 +36,28 @@
       path: /etc/krb5.conf
       regexp: '\sdns_lookup_realm'
       line: '  dns_lookup_realm = true'
+    notify: restart sssd
     when: ipaclient_krb5_fix | bool
+
+  - name: Ignore Auto DNS on NAT interface
+    command: nmcli con mod enp0s3 ipv4.ignore-auto-dns yes
+    notify: restart NetworkManager
+
+  - name: Add IPv4 DNS server addresses
+    community.general.nmcli:
+      conn_name: System enp0s8
+      type: ethernet
+      dns4: " {{ ad_server_ip_address }}"
+      state: present
+    notify: restart NetworkManager
+
+  handlers:
+  - name: restart sssd
+    service:
+      name: sssd
+      state: restarted
+
+  - name: restart NetworkManager
+    service:
+      name: NetworkManager
+      state: restarted
