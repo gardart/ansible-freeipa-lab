@@ -15,6 +15,8 @@
 | ------------- | ------------- | ------------- | ------------- |
 | Domain Controller | Server 2019 | dc1.ad.test | 192.168.68.10 |
 | IPA Server | Centos 8 | ipa.idm.ad.test | 192.168.68.11 |
+| IPA Replica | Centos 8 | rep.idm.ad.test | 192.168.68.12 |
+| IPA Client | Centos 8 | cli.idm.ad.test | 192.168.68.13 |
 
 ### Users
 
@@ -25,7 +27,7 @@
 | jon | ad.test | Administrator | J0nP4ssw0rd |
 
 ## Prerequirements
-There are two Vagrant files to setup this LAB, one for Active Directory domain and another for FreeIPA domain.
+This LAB is built with Ansible, Vagrant and Virtualbox. There are Vagrant files inside the provisioning directory.
 To use the vagrant files, you will need to have done the following:
 
   1. Download and Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
@@ -42,6 +44,8 @@ You need to modify your host machine's hosts file (Mac/Linux: `/etc/hosts`; Wind
 
      192.168.68.10  dc1.ad.test
      192.168.68.11  ipa.idm.ad.test
+     192.168.68.12  rep.idm.ad.test
+     192.168.68.13  cli.idm.ad.test
 
 ## Setup
 
