@@ -53,3 +53,10 @@
       ipaadmin_password: '{{ ipaadmin_password }}'
       name: ad_domain_admins
       group: ad_domain_admins_external
+  
+  - name: Disable allow_all HBAC rule
+    ipahbacrule:
+      name: allow_all
+      state: disabled
+      ipaadmin_password: "{{ ipaadmin_password }}"
+    when: ipaserver_hbac_disable_allow_all | bool
