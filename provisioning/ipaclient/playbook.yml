@@ -1,0 +1,63 @@
+---
+- name: Playbook to configure IPA clients
+  hosts: ipaclients
+  become: true
+  gather_facts: true
+  collections:
+    - freeipa.ansible_freeipa
+  vars_files:
+    - ../../default.config.yml
+    - vars/main.yml
+  pre_tasks:
+  - name: Print variables for debugging
+    debug:
+      msg: "{{ domain }} {{ hostname }} {{inventory_hostname}}"
+  - name: change /etc/hosts
+    lineinfile:
+      path: '/etc/hosts'
+      regexp: '.*{{ hostname }}.*'
+      line: '{{ ipaddress }}  {{ hostname }}.{{ domain}} {{hostname}}'
+      backup: true
+  roles:
+  - role: ipaclient
+    state: present
+  tasks:
+  # https://access.redhat.com/solutions/3242461
+  - name: KDC - fixing dns_lookup_kdc
+    lineinfile:
+      path: /etc/krb5.conf
+      regexp: '\sdns_lookup_kdc'
+      line: '  dns_lookup_kdc = true'
+    notify: restart sssd
+    when: ipaclient_krb5_fix | bool
+
+  - name: KDC - fixing dns_lookup_realm
+    lineinfile:
+      path: /etc/krb5.conf
+      regexp: '\sdns_lookup_realm'
+      line: '  dns_lookup_realm = true'
+    notify: restart sssd
+    when: ipaclient_krb5_fix | bool
+
+  - name: Ignore Auto DNS on NAT interface
+    command: nmcli con mod enp0s3 ipv4.ignore-auto-dns yes
+    notify: restart NetworkManager
+
+  - name: Add IPv4 DNS server addresses
+    community.general.nmcli:
+      conn_name: System enp0s8
+      type: ethernet
+      dns4: " {{ ad_server_ip_address }}"
+      state: present
+    notify: restart NetworkManager
+
+  handlers:
+  - name: restart sssd
+    service:
+      name: sssd
+      state: restarted
+
+  - name: restart NetworkManager
+    service:
+      name: NetworkManager
+      state: restarted
