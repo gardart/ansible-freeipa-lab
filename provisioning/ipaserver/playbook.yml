@@ -59,4 +59,4 @@
       name: allow_all
       state: disabled
       ipaadmin_password: "{{ ipaadmin_password }}"
-    when: ipaserver_hbac_disable_allow_all | bool
+    when: ipaserver_hbac_allow_all | bool
