@@ -1,4 +1,4 @@
-# FreeIPA identity management (IDM) with Active Directory LAB
+# FreeIPA identity management (IDM) with Active Directory trust
 
 ## LAB Overview
 
