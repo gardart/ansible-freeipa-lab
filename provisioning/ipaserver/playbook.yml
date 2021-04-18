@@ -34,6 +34,7 @@
 
   - name: ensure the one-way trust present
     ipatrust:
+      ipaadmin_password: '{{ ipaadmin_password }}'
       realm: "{{ ad_domain }}"
       admin: "{{ ad_admin_user }}"
       password: "{{ ad_admin_password }}"

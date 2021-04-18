@@ -1,8 +1,8 @@
 ---
 - name: Playbook to configure IPA server HBAC rules
   hosts: ipaserver
-  become: true
-  gather_facts: true
+  become: false
+  gather_facts: false
   collections:
     - freeipa.ansible_freeipa
   vars_files:
