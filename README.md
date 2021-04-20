@@ -106,7 +106,6 @@ Support for trusted domain is enabled setting a netbios name for linux domain.
 This is a prerequisite because active directory expects from remote side a netbios name.
 ```shell
 ipa-adtrust-install
-#ipa-adtrust-install –netbios-name=IDM
 ```
 
 Configure DNS forwarder on freeipa server. 
@@ -139,8 +138,32 @@ nslookup -type=SRV _kerberos._tcp.idm.ad.test
 
 ## Debugging
 
+### SSSD Cache
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/linux_domain_identity_authentication_and_policy_guide/sssd-system-uids
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/sssd-cache
+If the administrator knows that a specific record (user, group, or netgroup) has been updated, then sss_cache can purge the records for that specific account and leave the rest of the cache intact: 
+```shell
+sss_cache -u jon@ad.test
+id jon@ad.test
+```
+
+Most commonly, this is used to clear the cache and update all records: 
+```shell
+sss_cache -E
+id jon@ad.test
+```
+
+Manually Deleting Cache Files
+```shell
+systemctl stop sssd
+rm -rf /var/lib/sss/db/*
+systemctl restart sssd
+```
+
+### Viewing, starting and stopping the Identity Management services
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_identity_management/viewing-starting-and-stopping-the-ipa-server_configuring-and-managing-idm
 
+### Debugging AD Trust
 https://www.freeipa.org/page/Active_Directory_trust_setup#Debugging_trust
 
 https://www.freeipa.org/page/Active_Directory_trust_setup#Allow_access_for_users_from_AD_domain_to_protected_resources

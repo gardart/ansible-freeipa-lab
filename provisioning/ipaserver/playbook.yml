@@ -34,6 +34,7 @@
 
   - name: ensure the one-way trust present
     ipatrust:
+      ipaadmin_password: '{{ ipaadmin_password }}'
       realm: "{{ ad_domain }}"
       admin: "{{ ad_admin_user }}"
       password: "{{ ad_admin_password }}"
@@ -59,3 +60,13 @@
       name: allow_all
       state: "{{ ipaserver_hbac_allow_all }}"
       ipaadmin_password: "{{ ipaadmin_password }}"
+  
+  - name: Create HBAC rule for Domain Admins group
+    ipahbacrule:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      name: ad_domain_admins_allow_all
+      description: Allow Domain Admins to access any host from any host
+      group: ad_domain_admins
+      hostcat: all
+      servicecat: all
+      state: present

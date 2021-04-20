@@ -1,0 +1,20 @@
+---
+- name: Playbook to configure IPA server SUDO rules
+  hosts: ipaserver
+  become: false
+  gather_facts: false
+  collections:
+    - freeipa.ansible_freeipa
+  vars_files:
+    - ../default.config.yml
+    - vars/main.yml
+  tasks:
+  - ipasudorule:
+      ipaadmin_password: "{{ ipaadmin_password }}"
+      name: sudo_all_nopasswd
+  - freeipa.ansible_freeipa.ipasudorule:
+        ipaadmin_password: "{{ ipaadmin_password }}"
+        name: "testsudorule"
+        description: "A sudorule for testing"
+        sudooption:
+          - "!authenticate"
