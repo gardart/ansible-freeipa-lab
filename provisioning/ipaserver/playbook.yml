@@ -70,3 +70,11 @@
       hostcat: all
       servicecat: all
       state: present
+
+  - name: Add DNS records for ipa clients
+    ipadnsrecord:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      zone_name: idm.ad.test
+      name: rep
+      a_rec:
+        - 192.168.68.12

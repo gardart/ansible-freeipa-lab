@@ -1,4 +1,5 @@
 # FreeIPA identity management (IDM) with Active Directory trust
+https://www.freeipa.org/page/Demo
 
 ## LAB Overview
 
@@ -137,6 +138,13 @@ nslookup -type=SRV _kerberos._tcp.idm.ad.test
 ```
 
 ## Debugging
+
+### IPA health
+https://github.com/freeipa/freeipa-healthcheck
+```shell
+ipa-healthcheck --output-type human
+ipa-healthcheck --output-type human --failures-only
+```
 
 ### SSSD Cache
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/linux_domain_identity_authentication_and_policy_guide/sssd-system-uids

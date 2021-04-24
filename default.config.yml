@@ -31,6 +31,8 @@ ipaserver_auto_forwarders: yes
 ipaserver_setup_adtrust: yes
 ipaserver_ipatrust_range_type: ipa-ad-trust
 #ipaserver_ipatrust_range_type: ipa-ad-trust-posix
-ipaserver_hbac_allow_all: enabled
+ipaserver_hbac_disable_allow_all: false
+ipaserver_hbac_allow_all: disabled
+ipareplica_setup_adtrust: True
 
 timezone: GMT Standard Time
