@@ -194,3 +194,16 @@ krb5_child[6962][6962]: Cannot find KDC for realm "AD.TEST"
 
 Issue normally related to DNS lookup, check /etc/resolv.conf and if /etc/krb5.conf has dns_lookup_kdc = true
 https://access.redhat.com/solutions/3242461
+
+## Further reading
+### Determining the appropriate number of replicas
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/planning_identity_management/index#determining-the-appropriate-number-of-replicas_planning-the-replica-topology
+
+Set up at least two replicas in each data center
+    A data center can be, for example, a main office or a geographical location. 
+Set up a sufficient number of servers to serve your clients
+    One Identity Management (IdM) server can provide services to 2000 - 3000 clients. This assumes the clients query the servers multiple times a day, but not, for example, every minute. If you expect more frequent queries, plan for more servers. 
+Set up a sufficient number of Certificate Authority (CA) replicas
+    Only replicas with the CA role installed can replicate certificate data. If you use the IdM CA, ensure your environment has at least two CA replicas with certificate replication agreements between them. 
+Set up a maximum of 60 replicas in a single IdM domain
+    Red Hat supports environments with up to 60 replicas. 
