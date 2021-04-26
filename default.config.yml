@@ -28,13 +28,13 @@ ipaserver_domain: '{{ ipa_domain }}'
 ipaserver_realm: '{{ ipa_realm }}'
 ipaserver_setup_dns: yes
 ipaserver_auto_forwarders: yes
-ipaserver_setup_adtrust: yes
-ipaserver_ipatrust_range_type: ipa-ad-trust
 #ipaserver_ipatrust_range_type: ipa-ad-trust-posix
-ipaserver_hbac_disable_allow_all: false
-ipaserver_hbac_allow_all: disabled
+
+ipaserver_setup_adtrust: yes
+ipareplica_setup_adtrust: yes
+ipaserver_ipatrust_range_type: ipa-ad-trust
+
 ipaserver_no_hbac_allow: no
-ipareplica_setup_adtrust: True
 ipareplica_no_hbac_allow: no
 
 timezone: GMT Standard Time

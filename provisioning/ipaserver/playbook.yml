@@ -55,12 +55,6 @@
       name: ad_domain_admins
       group: ad_domain_admins_external
   
-  - name: Disable allow_all HBAC rule
-    ipahbacrule:
-      name: allow_all
-      state: "{{ ipaserver_hbac_allow_all }}"
-      ipaadmin_password: "{{ ipaadmin_password }}"
-  
   - name: Create HBAC rule for Domain Admins group
     ipahbacrule:
       ipaadmin_password: '{{ ipaadmin_password }}'
