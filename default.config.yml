@@ -33,6 +33,8 @@ ipaserver_ipatrust_range_type: ipa-ad-trust
 #ipaserver_ipatrust_range_type: ipa-ad-trust-posix
 ipaserver_hbac_disable_allow_all: false
 ipaserver_hbac_allow_all: disabled
+ipaserver_no_hbac_allow: no
 ipareplica_setup_adtrust: True
+ipareplica_no_hbac_allow: no
 
 timezone: GMT Standard Time
