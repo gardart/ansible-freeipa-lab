@@ -1,7 +1,7 @@
 ---
 - name: Playbook to configure IPA clients
-  hosts: ipaclients
   become: true
+  hosts: all
   gather_facts: true
   collections:
     - freeipa.ansible_freeipa
@@ -9,15 +9,23 @@
     - ../../default.config.yml
     - vars/main.yml
   pre_tasks:
-  - name: Print variables for debugging
-    debug:
-      msg: "{{ domain }} {{ hostname }} {{inventory_hostname}}"
-  - name: change /etc/hosts
-    lineinfile:
-      path: '/etc/hosts'
-      regexp: '.*{{ hostname }}.*'
-      line: '{{ ipaddress }}  {{ hostname }}.{{ domain}} {{hostname}}'
-      backup: true
+  - name: Ignore Auto DNS on NAT interface
+    command: nmcli con mod enp0s3 ipv4.ignore-auto-dns yes
+    notify: restart NetworkManager
+
+  - name: Set a hostname
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}.{{ domain }}"
+
+  - name: Add IPv4 configuration
+    community.general.nmcli:
+      conn_name: System enp0s8
+      type: ethernet
+      dns4: "{{ ipa_server_ip_address }}"
+      dns4_search: "{{ ipa_domain }}"
+      state: present
+    notify: restart NetworkManager
+
   roles:
   - role: ipaclient
     state: present
