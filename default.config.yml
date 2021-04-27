@@ -11,6 +11,7 @@ ipa_replica_ip_address: 192.168.68.12
 ipa_client_name: cli
 ipa_client_ip_address: 192.168.68.13
 ipa_client_krb5_fix: true
+ipa_client_set_default_domain: true
 
 ad_realm: AD.TEST
 ad_domain: ad.test

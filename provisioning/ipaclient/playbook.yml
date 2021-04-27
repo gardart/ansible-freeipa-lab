@@ -39,6 +39,14 @@
     notify: restart sssd
     when: ipa_client_krb5_fix | bool
 
+  - name: Setting default domain to login
+    lineinfile:
+      path: /etc/sssd/sssd.conf
+      line: 'default_domain_suffix = {{ ad_domain }}'
+      insertafter: '^\[sssd\]'
+    notify: restart sssd
+    when: ipa_client_set_default_domain | bool
+
   - name: Ignore Auto DNS on NAT interface
     command: nmcli con mod enp0s3 ipv4.ignore-auto-dns yes
     notify: restart NetworkManager
