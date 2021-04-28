@@ -87,13 +87,15 @@ ipa-dnskeysyncd Service: RUNNING
 ipa: INFO: The ipactl command was successful
 ```
 
-### Create FreeIPA replica with Vagrant and Ansible provisioner
+### Create FreeIPA replicas with Vagrant and Ansible provisioner
+To create more than one replica, change the ```numberof_ipa_replicas``` variable in default.config.yml, the default value is 1.
 ```shell
 cd provisioning/ipareplica
 vagrant up
 ```
 
 ### Create FreeIPA client with Vagrant and Ansible provisioner
+To create more than one client, change the ```numberof_ipa_clients``` variable in default.config.yml, the default value is 1.
 ```shell
 cd provisioning/ipaclient
 vagrant up

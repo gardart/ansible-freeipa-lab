@@ -1,6 +1,13 @@
+require 'yaml'
+settings = YAML.load_file '../../default.config.yml'
 Vagrant.configure("2") do |config|
-N = 3
+N = settings['numberof_ipa_clients']
 (1..N).each do |machine_id|
+
+  config.vm.provider :virtualbox do |v|
+    v.memory = 1024
+  end
+
   config.vm.define "client#{machine_id}" do |machine|
     machine.vm.box = "geerlingguy/centos8"
     machine.vm.hostname = "client#{machine_id}"

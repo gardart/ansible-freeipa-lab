@@ -1,6 +1,6 @@
 ---
-ipaddress: '{{ ipa_replica_ip_address }}'
-hostname: '{{ ipa_replica_name }}'
+#ipaddress: '{{ ipa_replica_ip_address }}'
+#hostname: '{{ ipa_replica_name }}'
 domain: '{{ ipa_domain }}'
-fqdn: '{{ ipa_server_fqdn }}'
+#fqdn: '{{ ipa_server_fqdn }}'
 ipaserver_no_dnssec_validation: True
