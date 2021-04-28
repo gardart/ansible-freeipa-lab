@@ -47,19 +47,13 @@
       ipaadmin_password: '{{ ipaadmin_password }}'
       name: ad_domain_admins_external
       external: yes
-      externalmember: "{{ ad_netbios }}\\Domain Admins"
+      externalmember: "Domain Admins@{{ ad_domain }}"
 
   - name: Create internal group and add the external group as a member
     ipagroup:
       ipaadmin_password: '{{ ipaadmin_password }}'
       name: ad_domain_admins
       group: ad_domain_admins_external
-  
-  - name: Disable allow_all HBAC rule
-    ipahbacrule:
-      name: allow_all
-      state: "{{ ipaserver_hbac_allow_all }}"
-      ipaadmin_password: "{{ ipaadmin_password }}"
   
   - name: Create HBAC rule for Domain Admins group
     ipahbacrule:

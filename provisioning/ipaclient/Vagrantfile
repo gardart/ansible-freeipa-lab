@@ -1,18 +1,28 @@
 require 'yaml'
 settings = YAML.load_file '../../default.config.yml'
-fqdn = settings['ipa_client_name'] + "." + settings['ipa_domain']
 Vagrant.configure("2") do |config|
-  config.vm.define "cli" do |config|
-    config.vm.box = "geerlingguy/centos8"
-    config.vm.hostname = fqdn
-    config.vm.synced_folder '.', '/vagrant', disabled: true
-		config.ssh.insert_key = false
-    config.vm.network :private_network, ip: settings['ipa_client_ip_address']
+N = settings['numberof_ipa_clients']
+(1..N).each do |machine_id|
 
-    config.vm.provision "ansible" do |ansible|
-        ansible.playbook = "./playbook.yml"
-        ansible.inventory_path = "./inventory"
-        ansible.become = true
+  config.vm.provider :virtualbox do |v|
+    v.memory = 1024
+  end
+
+  config.vm.define "client#{machine_id}" do |machine|
+    machine.vm.box = "geerlingguy/centos8"
+    machine.vm.hostname = "client#{machine_id}"
+    machine.vm.network "private_network", ip: "192.168.68.#{20+machine_id}"
+    machine.vm.synced_folder '.', '/vagrant', disabled: true
+		machine.ssh.insert_key = false
+    # Only execute once the Ansible provisioner,
+    # when all the machines are up and ready.
+    if machine_id == N
+      machine.vm.provision :ansible do |ansible|
+        # Disable default limit to connect to all the machines
+        ansible.limit = "all"
+        ansible.playbook = "playbook.yml"
+      end
     end
   end
+end
 end

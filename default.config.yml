@@ -1,4 +1,7 @@
 ---
+numberof_ipa_replicas: 5
+numberof_ipa_clients: 1
+
 ipa_realm: IDM.AD.TEST
 ipa_domain: idm.ad.test
 ipa_netbios: IDM
@@ -6,11 +9,10 @@ ipa_server_name: ipa
 ipa_server_fqdn: '{{ ipa_server_name }}.{{ ipa_domain }}'
 ipa_server_ip_address: 192.168.68.11
 ipa_server_gateway: 192.168.68.254
-ipa_replica_name: rep
-ipa_replica_ip_address: 192.168.68.12
-ipa_client_name: cli
-ipa_client_ip_address: 192.168.68.13
+#ipa_replica_name: rep
+#ipa_replica_ip_address: 192.168.68.12
 ipa_client_krb5_fix: true
+ipa_client_set_default_domain: false
 
 ad_realm: AD.TEST
 ad_domain: ad.test
@@ -28,13 +30,13 @@ ipaserver_domain: '{{ ipa_domain }}'
 ipaserver_realm: '{{ ipa_realm }}'
 ipaserver_setup_dns: yes
 ipaserver_auto_forwarders: yes
-ipaserver_setup_adtrust: yes
-ipaserver_ipatrust_range_type: ipa-ad-trust
 #ipaserver_ipatrust_range_type: ipa-ad-trust-posix
-ipaserver_hbac_disable_allow_all: false
-ipaserver_hbac_allow_all: disabled
+
+ipaserver_setup_adtrust: yes
+ipareplica_setup_adtrust: yes
+ipaserver_ipatrust_range_type: ipa-ad-trust
+
 ipaserver_no_hbac_allow: no
-ipareplica_setup_adtrust: True
 ipareplica_no_hbac_allow: no
 
 timezone: GMT Standard Time
