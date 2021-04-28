@@ -1,5 +1,5 @@
 ---
-numberof_ipa_replicas: 5
+numberof_ipa_replicas: 3
 numberof_ipa_clients: 1
 
 ipa_realm: IDM.AD.TEST
@@ -9,9 +9,9 @@ ipa_server_name: ipa
 ipa_server_fqdn: '{{ ipa_server_name }}.{{ ipa_domain }}'
 ipa_server_ip_address: 192.168.68.11
 ipa_server_gateway: 192.168.68.254
-#ipa_replica_name: rep
-#ipa_replica_ip_address: 192.168.68.12
 ipa_client_krb5_fix: true
+# Use Short Names to Resolve and Authenticate Users/Groups
+ipaserver_use_short_names: true
 ipa_client_set_default_domain: false
 
 ad_realm: AD.TEST
