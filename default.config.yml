@@ -1,5 +1,5 @@
 ---
-numberof_ipa_replicas: 3
+numberof_ipa_replicas: 1
 numberof_ipa_clients: 1
 
 ipa_realm: IDM.AD.TEST
@@ -29,7 +29,10 @@ ipadm_password: IPApass1.
 ipaserver_domain: '{{ ipa_domain }}'
 ipaserver_realm: '{{ ipa_realm }}'
 ipaserver_setup_dns: yes
+ipareplica_setup_dns: yes
+ipareplica_setup_ca: yes
 ipaserver_auto_forwarders: yes
+ipareplica_auto_forwarders: yes
 #ipaserver_ipatrust_range_type: ipa-ad-trust-posix
 
 ipaserver_setup_adtrust: yes
