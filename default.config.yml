@@ -23,6 +23,7 @@ ad_server_gateway: 192.168.68.254
 ad_admin_user: administrator@ad.test
 ad_admin_password: IPApass1.
 ad_safe_mode_password: IPApass1.
+ad_site: Default-First-Site-Name
 
 ipaadmin_password: IPApass1.
 ipadm_password: IPApass1.
