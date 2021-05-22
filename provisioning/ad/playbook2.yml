@@ -1,5 +1,5 @@
 ---
-- hosts: dc
+- hosts: dc2
   gather_facts: true
 
   vars_files:
@@ -62,6 +62,7 @@
         dns_domain_name: "{{ windows_domain_controller_info['dns_domain_name'] }}"
         safe_mode_password: "{{ windows_domain_controller_info['safe_mode_password'] }}"
       register: create_win_domain
+      delegate_to: dc1
 
     - name: Reboot
       ansible.windows.win_reboot:
