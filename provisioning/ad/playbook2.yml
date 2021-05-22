@@ -98,6 +98,8 @@
           - Domain Admins
         attributes:
           telephoneNumber: 354 123 45 67
+      delegate_to: dc1
+
 
     - name: Add user with POSIX attributes
       community.windows.win_domain_user:
@@ -111,6 +113,8 @@
           gidNumber: "5002"
           unixHomeDirectory: "/home/testuser1"
           loginShell: "/bin/bash"
+      delegate_to: dc1
+
 
     - name: Copy dns-server-configure.ps1 to the scripts folder
       ansible.windows.win_copy:
@@ -132,6 +136,8 @@
         values:
           - "{{ ad_server_ip_address }}"
         zone: "{{ ad_domain }}"
+      delegate_to: dc1
+
 
     - name: Create A records for IDM subdomain
       community.windows.win_dns_record:
@@ -141,6 +147,8 @@
         values:
           - "{{ ipa_server_ip_address }}"
         zone: "{{ ad_domain }}"
+      delegate_to: dc1
+
     
     - name: Creating NS records for IDM subdomain
       community.windows.win_dns_record:
@@ -150,3 +158,5 @@
         values:
           - "{{ ipa_server_name }}.{{ ipa_domain }}"
         zone: "{{ ad_domain }}"
+      delegate_to: dc1
+
