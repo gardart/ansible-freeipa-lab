@@ -28,7 +28,6 @@
     loop: "{{ externalgroups.list }}"
     register: result
     ignore_errors: true
-    #when: 0>1
 
   - name: Create internal group and add the external group as a member
     ipagroup:
@@ -36,5 +35,3 @@
       name: "{{ item.name }}"
       group: "{{ item.name }}_external"
     loop: "{{ externalgroups.list }}"
-    when: 0>1
-    #when: result is succeeded
