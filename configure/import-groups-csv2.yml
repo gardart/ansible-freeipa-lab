@@ -1,0 +1,26 @@
+---
+- name: Playbook to import groups to IdM
+  hosts: ipaserver
+  vars_files:
+    - ../default.config.yml
+    - vars/main.yml
+
+  tasks:
+  - name: Read groups from CSV file and return a list
+    read_csv:
+      path: externalgroups.csv
+    register: externalgroups
+    delegate_to: localhost
+
+  - debug:
+      msg: 'Group {{ item.name }} has GID {{ item.gidNumber }} and desc {{ item.description }}'
+    loop: "{{ externalgroups.list }}"
+    delegate_to: localhost
+
+  - name: Ensure group is present
+    community.general.ipa_group:
+      name: oinstall
+      state: present
+      ipa_host: ipa.idm.ad.test
+      ipa_user: admin
+      ipa_pass: IPApass1.
