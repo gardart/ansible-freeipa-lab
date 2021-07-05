@@ -1,0 +1,36 @@
+---
+grouplist:
+  - name: editors
+    description: Editing files
+    commands:
+      - "/usr/bin/sudoedit"
+  - name: filemgmt
+    description: Managing files 
+    commands:
+      - "/bin/cp"
+      - "/bin/mv"
+      - "/usr/bin/rsync"
+      - "/bin/rm"
+      - "/bin/ls"
+      - "/bin/echo"
+      - "/bin/cat"
+      - "/usr/bin/tail"
+      - "/bin/mkdir"
+      - "/bin/rmdir"
+  - name: filemgmt-show
+    description: Displaying files 
+    commands:
+  - name: filemgmt
+    description: Managing files 
+    commands:
+  - name: filemgmt
+    description: Managing files 
+    commands:
+  - name: filemgmt
+    description: Managing files 
+    commands:
+
+    filemgmt-show: Displaying files
+  filemgmt-find: Searching files
+  fileperm: Managing file permissions
+  fileperm-acl: Managing ACLs
