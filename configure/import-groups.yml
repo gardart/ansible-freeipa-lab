@@ -1,0 +1,28 @@
+---
+- name: Playbook to import groups to IdM
+  hosts: ipaserver
+  collections:
+    - freeipa.ansible_freeipa
+  vars_files:
+    - ../default.config.yml
+    - vars/main.yml
+    - vars/groups.yml
+
+  tasks:
+  - name: Create an external group and add members from a trust to it
+    ipagroup:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      name: "{{ item.name }}_external"
+      external: yes
+      externalmember: "{{ item.externalgroup }}"
+    loop: "{{ externalgroups }}"
+    register: result
+    ignore_errors: true
+
+  - name: Create internal group and add the external group as a member
+    ipagroup:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      name: "{{ item.name }}"
+      group: "{{ item.name }}_external"
+    loop: "{{ externalgroups }}"
+    #when: result is succeeded

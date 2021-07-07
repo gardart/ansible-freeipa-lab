@@ -67,6 +67,11 @@
       state: present
     notify: restart NetworkManager
 
+  - name: Add SSSD config
+    template:
+      src: templates/ipaclient.conf.j2
+      dest: /etc/sssd/conf.d/ipaclient.conf
+
   handlers:
   - name: restart sssd
     service:

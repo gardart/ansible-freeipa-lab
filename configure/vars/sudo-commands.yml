@@ -1,0 +1,4 @@
+---
+
+sudo_commands:
+  - /usr/bin/su

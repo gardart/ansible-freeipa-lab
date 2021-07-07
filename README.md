@@ -208,4 +208,10 @@ Set up a sufficient number of servers to serve your clients
 Set up a sufficient number of Certificate Authority (CA) replicas
     Only replicas with the CA role installed can replicate certificate data. If you use the IdM CA, ensure your environment has at least two CA replicas with certificate replication agreements between them. 
 Set up a maximum of 60 replicas in a single IdM domain
-    Red Hat supports environments with up to 60 replicas. 
+    Red Hat supports environments with up to 60 replicas.
+
+### Set Domain resolution order for clients globally
+Seperate domains with colon
+```shell
+ipa config-mod --domain-resolution-order='idm.ad.test:ad.test'
+```

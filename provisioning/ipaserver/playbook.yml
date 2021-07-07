@@ -65,10 +65,8 @@
       servicecat: all
       state: present
 
-  - name: Add DNS records for ipa clients
-    ipadnsrecord:
+  - name: Use short names to resolve and authenticate users/groups by setting domain resolution order globally
+    ipaconfig:
       ipaadmin_password: '{{ ipaadmin_password }}'
-      zone_name: idm.ad.test
-      name: rep
-      a_rec:
-        - 192.168.68.12
+      domain_resolution_order: '{{ ipa_domain }}:{{ ad_domain }}'
+    when: ipaserver_use_short_names | bool

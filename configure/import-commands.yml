@@ -1,0 +1,16 @@
+---
+- name: Playbook to import Sudo commands to IdM
+  hosts: ipaserver
+  collections:
+    - freeipa.ansible_freeipa
+  vars_files:
+    - ../default.config.yml
+    - vars/main.yml
+    - vars/sudo-commands.yml
+
+  tasks:
+  - name: Create Sudo commands
+    ipasudocmd:
+      ipaadmin_password: '{{ ipaadmin_password }}'
+      name: "{{ item }}"
+    loop: "{{ sudo_commands }}"

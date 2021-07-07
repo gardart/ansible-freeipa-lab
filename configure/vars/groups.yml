@@ -1,0 +1,5 @@
+---
+
+externalgroups:
+  - name: Domain_Users
+    externalgroup: "Domain Users@ad.test"

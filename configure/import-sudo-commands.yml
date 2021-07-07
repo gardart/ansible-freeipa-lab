@@ -1,0 +1,18 @@
+---
+- name: Test
+  hosts: all
+  vars_files: vars/sudo-groups-commands.yml
+
+  tasks:
+
+  - name: list groups and commands
+    debug:
+      msg: "{{ item.0.name }} -- {{ item.0.description }} -- {{item.1}}"
+    loop: "{{ q('subelements', grouplist, 'commands', {'skip_missing': True}) }}"
+
+  - name: list groups and commands
+    debug:
+      msg: "{{ item.0.name }} -- {{ item.0.description }} -- {{item.1}}"
+    with_subelements:
+        - "{{ grouplist }}"
+        - commands
