@@ -1,6 +1,8 @@
-[ipaserver]
-ipa1 ansible_host=192.168.68.11
+localhost              ansible_connection=local
 
-[ipaserver:vars]
-ansible_user=vagrant
-ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+#[ipaserver]
+#ipa1 ansible_host=192.168.68.11
+#
+#[ipaserver:vars]
+#ansible_user=vagrant
+#ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
