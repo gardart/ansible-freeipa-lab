@@ -180,6 +180,21 @@ https://www.freeipa.org/page/Active_Directory_trust_setup#Allow_access_for_users
 
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_authentication_and_authorization_in_rhel/understanding-sssd-and-its-benefits_configuring-authentication-and-authorization-in-rhel
 
+## LE external certificates for httpd
+```shell
+ipa-cacert-manage install isrgrootx1.pem
+ipa-cacert-manage install isrg-root-x2.pem
+ipa-cacert-manage install lets-encrypt-e1.pem
+ipa-cacert-manage install lets-encrypt-e2.pem
+ipa-cacert-manage install lets-encrypt-r3.pem
+ipa-cacert-manage install lets-encrypt-r4.pem
+
+ipa-certupdate
+ipa-server-certinstall -w example_com.key example_com.cer --pin="" --dirman-password=password
+ipactl restart
+curl --insecure -vvI https://example.com/ipa/ui/ 2>&1 | awk 'BEGIN { cert=0 } /* SSL connection/ { cert=1 } /*/ { if (cert) print }'
+'''
+
 ## Issues
 Disable DNSSEC validation
 ```
