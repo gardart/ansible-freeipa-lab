@@ -165,9 +165,7 @@ id jon@ad.test
 
 Manually Deleting Cache Files
 ```shell
-systemctl stop sssd
-rm -rf /var/lib/sss/db/*
-systemctl restart sssd
+systemctl stop sssd; rm -rf /var/lib/sss/{mc,db}/* ; systemctl start sssd
 ```
 
 ### Viewing, starting and stopping the Identity Management services
