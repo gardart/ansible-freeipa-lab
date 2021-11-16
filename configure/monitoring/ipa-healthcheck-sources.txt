@@ -1,0 +1,86 @@
+pki.server.healthcheck.certs.expiration
+   CASystemCertExpiryCheck
+   KRASystemCertExpiryCheck
+   OCSPSystemCertExpiryCheck
+   TKSSystemCertExpiryCheck
+   TPSSystemCertExpiryCheck
+pki.server.healthcheck.certs.trustflags
+   CASystemCertTrustFlagCheck
+   KRASystemCertTrustFlagCheck
+   OCSPSystemCertTrustFlagCheck
+   TKSSystemCertTrustFlagCheck
+   TPSSystemCertTrustFlagCheck
+pki.server.healthcheck.meta.csconfig
+   CADogtagCertsConfigCheck
+   KRADogtagCertsConfigCheck
+   OCSPDogtagCertsConfigCheck
+   TKSDogtagCertsConfigCheck
+   TPSDogtagCertsConfigCheck
+pki.server.healthcheck.meta.connectivity
+   DogtagCACertsConnectivityCheck
+   DogtagKRAConnectivityCheck
+   DogtagOCSPConnectivityCheck
+   DogtagTKSConnectivityCheck
+   DogtagTPSConnectivityCheck
+ipahealthcheck.dogtag.ca
+   DogtagCertsConfigCheck
+   DogtagCertsConnectivityCheck
+ipahealthcheck.ds.replication
+   ReplicationConflictCheck
+ipahealthcheck.ds.ruv
+   RUVCheck
+ipahealthcheck.ipa.certs
+   IPACertmongerExpirationCheck
+   IPACertfileExpirationCheck
+   IPACertTracking
+   IPACertNSSTrust
+   IPANSSChainValidation
+   IPAOpenSSLChainValidation
+   IPARAAgent
+   IPACertRevocation
+   IPACertmongerCA
+   IPACAChainExpirationCheck
+ipahealthcheck.ipa.dna
+   IPADNARangeCheck
+ipahealthcheck.ipa.idns
+   IPADNSSystemRecordsCheck
+ipahealthcheck.ipa.files
+   IPAFileNSSDBCheck
+   IPAFileCheck
+   TomcatFileCheck
+ipahealthcheck.ipa.host
+   IPAHostKeytab
+ipahealthcheck.ipa.roles
+   IPACRLManagerCheck
+   IPARenewalMasterCheck
+ipahealthcheck.ipa.topology
+   IPATopologyDomainCheck
+ipahealthcheck.ipa.trust
+   IPATrustAgentCheck
+   IPATrustDomainsCheck
+   IPADomainCheck
+   IPATrustCatalogCheck
+   IPAsidgenpluginCheck
+   IPATrustAgentMemberCheck
+   IPATrustControllerPrincipalCheck
+   IPATrustControllerServiceCheck
+   IPATrustControllerConfCheck
+   IPATrustControllerGroupSIDCheck
+   IPATrustPackageCheck
+ipahealthcheck.meta.core
+   MetaCheck
+ipahealthcheck.meta.services
+   certmonger
+   dirsrv
+   gssproxy
+   httpd
+   ipa_custodia
+   ipa_dnskeysyncd
+   ipa_otpd
+   kadmin
+   krb5kdc
+   named
+   pki_tomcatd
+   sssd
+ipahealthcheck.system.filesystemspace
+   FileSystemSpaceCheck
