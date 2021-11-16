@@ -1,0 +1,20 @@
+
+
+ipa-healthcheck --output-type human --failures-only --source pki.server.healthcheck.certs.expiration
+ipa-healthcheck --output-type human --failures-only --source pki.server.healthcheck.certs.trustflags
+ipa-healthcheck --output-type human --failures-only --source pki.server.healthcheck.meta.csconfig
+ipa-healthcheck --output-type human --failures-only --source pki.server.healthcheck.meta.connectivity
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.dogtag.ca
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ds.replication
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ds.ruv
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.certs
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.dna
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.idns
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.files
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.host
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.roles
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.topology
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.ipa.trust
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.meta.core
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.meta.services
+ipa-healthcheck --output-type human --failures-only --source ipahealthcheck.system.filesystemspace
