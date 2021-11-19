@@ -1,0 +1,7 @@
+---
+grouplist:
+  - name: editors
+    description: Editing files
+    commands:
+      - "/usr/bin/sudoedit"
+      - "/usr/bin/sudoedit2"
