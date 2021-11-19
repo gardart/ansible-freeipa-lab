@@ -5,7 +5,8 @@ N = settings['numberof_ipa_replicas']
 (1..N).each do |machine_id|
 
   config.vm.provider :virtualbox do |v|
-    v.memory = 1024
+    v.gui = false
+    v.memory = 2048
   end
 
   config.vm.define "replica#{machine_id}" do |machine|

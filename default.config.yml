@@ -31,7 +31,7 @@ ipaserver_domain: '{{ ipa_domain }}'
 ipaserver_realm: '{{ ipa_realm }}'
 ipaserver_setup_dns: yes
 ipareplica_setup_dns: yes
-ipareplica_setup_ca: yes
+ipareplica_setup_ca: no
 ipaserver_auto_forwarders: yes
 ipareplica_auto_forwarders: yes
 #ipaserver_ipatrust_range_type: ipa-ad-trust-posix

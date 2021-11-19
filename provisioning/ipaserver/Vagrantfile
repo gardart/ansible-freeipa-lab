@@ -2,6 +2,10 @@ require 'yaml'
 settings = YAML.load_file '../../default.config.yml'
 fqdn = settings['ipa_server_name'] + "." + settings['ipa_domain']
 Vagrant.configure("2") do |config|
+  config.vm.provider :virtualbox do |v|
+    v.gui = false
+    v.memory = 2048
+  end
   config.vm.define "ipaserver" do |config|
     config.vm.box = "geerlingguy/centos8"
     config.vm.hostname = fqdn
