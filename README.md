@@ -199,6 +199,12 @@ Seperate domains with colon
 ipa config-mod --domain-resolution-order='idm.ad.test:ad.test'
 ```
 
+## IDM Backup
+
+Check successul backup last 24 hours
+
+```awk -v d="$(date -d'24 hours ago' +'%Y-%m-%d %H:%M')" '$1" "$2>=d &&/ipa-backup command was successful/' /var/log/ipabackup.log```
+
 ## Issues
 Disable DNSSEC validation
 ```
