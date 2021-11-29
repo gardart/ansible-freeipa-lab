@@ -38,8 +38,6 @@ function returnResult () {
 
 CHECKS=$(ipa-healthcheck --failures-only --output-type human --source $SOURCE $EXTRAOPTIONS)
 
-#*ipahealthcheck.ipa.trust.IPATrustCatalogCheck.S-1-5-21-894253103-312285852-903097961*) returnResult OK;;
-
 IFS=$'\n'
 for CHECK in ${CHECKS}; do
   case "$CHECK" in
@@ -58,4 +56,3 @@ esac
 
 echo "$RESULT"
 exit $EXITCODE
-
