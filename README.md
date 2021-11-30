@@ -207,6 +207,7 @@ Check successul backup last 24 hours
 
 ## IDM first master
 https://www.freeipa.org/page/Howto/Promote_CA_to_Renewal_and_CRL_Master#Identifying_current_first_master
+
 FreeIPA marks the first installed master with a CA, as the "first master." It is configured to renew the certificates and make them available to the other clones and to listen to and generate the CRL.
 
 Two important things to note:
@@ -214,7 +215,8 @@ Two important things to note:
     There should only one master at a time, otherwise the renewed certificates will step all over each other.
     Any CA can be the master. There is nothing magical about it, this is just configuration.
 
-$ ipa config-show
+```$ ipa config-show```
+```
   Maximum username length: 32
   Maximum hostname length: 64
   Home directory base: /home
@@ -238,7 +240,7 @@ $ ipa config-show
   IPA CA renewal master: ipa.idm.ad.test
   Domain resolution order: idm.ad.test:ad.test
   IPA DNS servers: ipa.idm.ad.test, replica1.idm.ad.test, replica4.idm.ad.test
-
+```
 
 ## Issues
 Disable DNSSEC validation
