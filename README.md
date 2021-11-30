@@ -205,6 +205,41 @@ Check successul backup last 24 hours
 
 ```awk -v d="$(date -d'24 hours ago' +'%Y-%m-%d %H:%M')" '$1" "$2>=d &&/ipa-backup command was successful/' /var/log/ipabackup.log```
 
+## IDM first master
+https://www.freeipa.org/page/Howto/Promote_CA_to_Renewal_and_CRL_Master#Identifying_current_first_master
+FreeIPA marks the first installed master with a CA, as the "first master." It is configured to renew the certificates and make them available to the other clones and to listen to and generate the CRL.
+
+Two important things to note:
+
+    There should only one master at a time, otherwise the renewed certificates will step all over each other.
+    Any CA can be the master. There is nothing magical about it, this is just configuration.
+
+$ ipa config-show
+  Maximum username length: 32
+  Maximum hostname length: 64
+  Home directory base: /home
+  Default shell: /bin/sh
+  Default users group: ipausers
+  Default e-mail domain: idm.ad.test
+  Search time limit: 2
+  Search size limit: 100
+  User search fields: uid,givenname,sn,telephonenumber,ou,title
+  Group search fields: cn,description
+  Enable migration mode: FALSE
+  Certificate Subject base: O=IDM.AD.TEST
+  Password Expiration Notification (days): 4
+  Password plugin features: AllowNThash, KDC:Disable Last Success
+  SELinux user map order: guest_u:s0$xguest_u:s0$user_u:s0$staff_u:s0-s0:c0.c1023$sysadm_u:s0-s0:c0.c1023$unconfined_u:s0-s0:c0.c1023
+  Default SELinux user: unconfined_u:s0-s0:c0.c1023
+  Default PAC types: MS-PAC, nfs:NONE
+  IPA masters: ipa.idm.ad.test, replica1.idm.ad.test, replica2.idm.ad.test, replica3.idm.ad.test, replica4.idm.ad.test
+  IPA master capable of PKINIT: ipa.idm.ad.test, replica1.idm.ad.test, replica2.idm.ad.test, replica3.idm.ad.test, replica4.idm.ad.test
+  IPA CA servers: ipa.idm.ad.test, replica1.idm.ad.test, replica4.idm.ad.test
+  IPA CA renewal master: ipa.idm.ad.test
+  Domain resolution order: idm.ad.test:ad.test
+  IPA DNS servers: ipa.idm.ad.test, replica1.idm.ad.test, replica4.idm.ad.test
+
+
 ## Issues
 Disable DNSSEC validation
 ```
