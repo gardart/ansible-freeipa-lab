@@ -1,0 +1,6 @@
+---
+# handlers file for idm-client
+- name: restart sssd
+  service:
+    name: sssd
+    state: restarted

@@ -1,0 +1,9 @@
+---
+# defaults file for custom-idm-client
+ipaadmin_password: '{{ vault_ipaadmin_password }}'
+ipaclient_krb5_fix: no
+ipa_client_set_default_domain: no
+ipaclient_mkhomedir: no
+ipaclient_force_join: no
+ipaclient_allow_repair: no
+ipasssd_preserve_sssd: no
