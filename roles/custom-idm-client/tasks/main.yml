@@ -1,5 +1,26 @@
 ---
 # tasks file for custom-idm-client
+
+- name: Backup and remove sssd.conf
+  block:
+    - name: Check that files exists
+      stat:
+        path: /etc/sssd/sssd.conf
+      register: sssd_result
+
+    - name: Backup sssd.conf
+      copy:
+        remote_src: True
+        src: "{{ sssd_result.stat.path }}"
+        dest: "{{ sssd_result.stat.path }}.bak"
+      when: sssd_result.stat.exists
+
+    - name: Remove old sssd.conf
+      file:
+        path: "{{ sssd_result.stat.path }}"
+        state: absent
+      when: sssd_result.stat.exists
+
 - name: Install iDM Client
   include_role:
     name: ipaclient 
