@@ -199,6 +199,16 @@ Seperate domains with colon
 ipa config-mod --domain-resolution-order='idm.ad.test:ad.test'
 ```
 
+## Uninstall IDM Client
+
+### Manual uninstallation and cleanup
+```shell
+ipa-client-install --uninstall -U
+systemctl stop sssd; rm -rf /var/log/sssd/* /var/lib/sss/{db,mc}/*; systemctl start sssd
+rm -f /var/lib/ipa-client/sysrestore/sysrestore.state
+dnf reinstall -y krb5-libs sssd
+```
+
 ## IDM Backup
 
 Check successul backup last 24 hours
