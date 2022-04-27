@@ -1,8 +1,37 @@
 ---
 # tasks file for custom-idm-client
 
+- name: Check whether /etc/sssd/sssd.conf contains "id_provider = ad"
+  command: grep -Fxq " id_provider = ad" /etc/sssd/sssd.conf
+  register: check_sssd_conf_ad_auth
+  ignore_errors: yes
+  changed_when: false
+
+- name: Test if id_provider is set to ad in sssd.conf
+  debug: msg="id_provider is ad"
+  when: check_sssd_conf_ad_auth.rc == 0
+
 - name: Backup and remove sssd.conf
   block:
+    - name: Purge EXAMPLE.COM from host keytab
+      command: >
+        /usr/sbin/ipa-rmkeytab
+        -k /etc/krb5.keytab
+        -r EXAMPLE.COM
+      register: result_ipa_rmkeytab
+      # Do not fail on error codes 3 and 5:
+      #   3 - Unable to open keytab
+      #   5 - Principal name or realm not found in keytab
+      #   7 - Failed to set cursor, typically when errcode
+      #       would be issued in past
+      failed_when: result_ipa_rmkeytab.rc != 0 and
+                   result_ipa_rmkeytab.rc != 3 and
+                   result_ipa_rmkeytab.rc != 5 and
+                   result_ipa_rmkeytab.rc != 7
+      when:
+        - sssd_result.stat.exists
+        - check_sssd_conf_ad_auth.rc == 0  
+
     - name: Check that files exists
       stat:
         path: /etc/sssd/sssd.conf
@@ -13,13 +42,17 @@
         remote_src: True
         src: "{{ sssd_result.stat.path }}"
         dest: "{{ sssd_result.stat.path }}.bak"
-      when: sssd_result.stat.exists
+      when:
+        - sssd_result.stat.exists
+        - check_sssd_conf_ad_auth.rc == 0
 
     - name: Remove old sssd.conf
       file:
         path: "{{ sssd_result.stat.path }}"
         state: absent
-      when: sssd_result.stat.exists
+      when:
+        - sssd_result.stat.exists
+        - check_sssd_conf_ad_auth.rc == 0
 
 - name: Install iDM Client
   include_role:
